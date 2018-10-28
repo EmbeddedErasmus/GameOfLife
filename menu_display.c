@@ -17,7 +17,7 @@ char *configuration_choices[] = {
 
 void display_menu(cell **field)
 {
-	int i=0;
+	int i=0, choice_Is_Made = 0;
 	int key_played_on_menu=0;	//Int to navigate in the menu
 	int index_menu_item=0;
 	int n_choices = ARRAY_SIZE(configuration_choices);
@@ -43,7 +43,7 @@ void display_menu(cell **field)
 	post_menu(configuration_menu); //Display the menu
 	refresh();
 
-	while((key_played_on_menu = getch()) != KEY_F(4))
+	while(choice_Is_Made!=1 && ((key_played_on_menu = getch()) != KEY_F(4)))
 	{   switch(key_played_on_menu)
 	    {	case KEY_DOWN:
 		        menu_driver(configuration_menu, REQ_DOWN_ITEM); //Key down will 
@@ -57,13 +57,13 @@ void display_menu(cell **field)
 			{	
 				current_menu_item = current_item(configuration_menu); //Getting info about the selected item
 				index_menu_item = item_index(current_menu_item);
-				goto exit_loop;
+				choice_Is_Made = 1;
 			}
 			break;
 		}
 	}
 
-	exit_loop:if(index_menu_item != n_choices-1)
+	if(index_menu_item != n_choices-1 && choice_Is_Made)
 	{
 		display_configuration(index_menu_item, field); //Getting the index of the current item in the menu	
 	}
