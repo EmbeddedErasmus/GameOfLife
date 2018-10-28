@@ -1,6 +1,7 @@
 #include <curses.h>
 
 #include "cell.h"
+#include "menu_display.h"
 
 void display(WINDOW *win, cell **area, int startx, int starty, int endx, int endy)
 {	int i, j;
@@ -15,8 +16,10 @@ void display(WINDOW *win, cell **area, int startx, int starty, int endx, int end
 int display_configuration(int configuration, cell **field)
 {
 	wclear(stdscr);
+	
 	int middle_x=LINES/2;
 	int middle_y=COLS/2;
+	int key_played_on_menu=0;
 
 	if(configuration==0) //The R-Pentomino
 	{
@@ -51,6 +54,24 @@ int display_configuration(int configuration, cell **field)
 	mvprintw(LINES - 1, 0, "Press F4 to Exit"); 
 	mvprintw(LINES - 2, 0, "Press enter to start");
 	mvprintw(LINES - 3, 0, "Press F2 to return");
+
+	while((key_played_on_menu = getch()) != KEY_F(4))
+	{   switch(key_played_on_menu)
+	    {	case KEY_F(2):
+		        goto back_to_menu;
+				break;
+
+			case 10:	/* In case the user presses Enter */
+			{	
+				
+			}
+			break;
+		}
+	}
+
+	back_to_menu:
+		display_menu(field);
+
 
 	return 0;
 }
