@@ -32,7 +32,7 @@ int main()
 	//First screen *******************************************************
 	mvprintw(LINES/2,(COLS-strlen(welcomeMessage))/2,"%s",welcomeMessage);
 	                                	/* print the message at the center of the screen */
-	mvprintw(LINES/2 +1,(COLS-strlen(namesMessage))/2 +1,"%s",namesMessage);
+	mvprintw(LINES/2 +1,(COLS-strlen(namesMessage))/2,"%s",namesMessage);
 
 	refresh();
 	getch(); //Just waiting for user to press something

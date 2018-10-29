@@ -20,35 +20,41 @@ int display_configuration(int configuration, cell **field)
 	int middle_x=LINES/2;
 	int middle_y=COLS/2;
 	int key_played_on_menu=0;
-	int choice_Is_Made =0, back_to_menu=0;
+	int choice_Is_Made =0, back_to_menu=0, start_Simulation=0;
+	clear_field(field);
 
 	if(configuration==0) //The R-Pentomino
 	{
-		field[middle_x][middle_y].current_state= TRUE;
-		field[middle_x-1][middle_y].current_state=TRUE;
-		field[middle_x+1][middle_y].current_state=TRUE;
-		field[middle_x][middle_y-1].current_state=TRUE;
-		field[middle_x-1][middle_y+1].current_state=TRUE;
+		field[middle_x][middle_y].next_state= 1;
+		field[middle_x-1][middle_y].next_state=1;
+		field[middle_x+1][middle_y].next_state=1;
+		field[middle_x][middle_y-1].next_state=1;
+		field[middle_x-1][middle_y+1].next_state=1;
 	}
 
 	if(configuration==1) //Die Hard
 	{
-		field[middle_x-1][middle_y+2].current_state=TRUE;
-		field[middle_x][middle_y-3].current_state= TRUE;
-		field[middle_x][middle_y-4].current_state= TRUE;
-		field[middle_x+1][middle_y-3].current_state=TRUE;
-		field[middle_x+1][middle_y+1].current_state=TRUE;
-		field[middle_x+1][middle_y+2].current_state=TRUE;
-		field[middle_x+1][middle_y+3].current_state=TRUE;
+		field[middle_x-1][middle_y+2].next_state=1;
+		field[middle_x][middle_y-3].next_state= 1;
+		field[middle_x][middle_y-4].next_state= 1;
+		field[middle_x+1][middle_y-3].next_state=1;
+		field[middle_x+1][middle_y+1].next_state=1;
+		field[middle_x+1][middle_y+2].next_state=1;
+		field[middle_x+1][middle_y+3].next_state=1;
 	}
 
 	if(configuration==2) //Acorn
 	{
-		field[middle_x][middle_y].current_state= TRUE;
-		field[middle_x+1][middle_y+1].current_state=TRUE;
-		field[middle_x+1][middle_y+2].current_state=TRUE;
-		field[middle_x+1][middle_y+3].current_state=TRUE;
+		field[middle_x][middle_y].next_state= 1;
+		field[middle_x-1][middle_y-2].next_state=1;
+		field[middle_x+1][middle_y-2].next_state=1;
+		field[middle_x+1][middle_y-3].next_state=1;
+		field[middle_x+1][middle_y+1].next_state=1;
+		field[middle_x+1][middle_y+2].next_state=1;
+		field[middle_x+1][middle_y+3].next_state=1;
 	}
+
+	update_field(field);
 	
 	display(stdscr, field, 0,0,LINES-1, COLS-1);
 
@@ -65,7 +71,8 @@ int display_configuration(int configuration, cell **field)
 
 			case 10:	/* In case the user presses Enter */
 			{	
-				
+				choice_Is_Made=1;
+				start_Simulation=1;
 			}
 			break;
 		}
@@ -74,6 +81,10 @@ int display_configuration(int configuration, cell **field)
 	if(choice_Is_Made && back_to_menu)
 	{
 		display_menu(field);
+	}
+	else if(choice_Is_Made && start_Simulation)
+	{
+		start_Game(field);
 	}
 
 	return 0;
