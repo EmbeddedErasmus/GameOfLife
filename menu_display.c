@@ -30,6 +30,7 @@ void display_menu(cell **field)
 	erase();
 	cbreak();
 	noecho();
+	timeout(TIME_OUT);
 	keypad(stdscr, TRUE);
 		
 	configurations_choice = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));

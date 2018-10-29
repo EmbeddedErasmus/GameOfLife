@@ -91,7 +91,7 @@ void start_Game(cell **field)
 	int key_played=0;
 	int x=0, y=0;
 
-	while(1/*(key_played = getch()) != KEY_F(4)*/)
+	while((key_played = getch()) != KEY_F(4))
 	{   
 		display(stdscr, field, 0,0,LINES-1, COLS-1);
 		for(x=0;x<LINES-1;x++)
@@ -102,7 +102,6 @@ void start_Game(cell **field)
 			}
 		}
 		update_field(field);
-		usleep(5000);
 	}
 	
 }
