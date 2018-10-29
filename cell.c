@@ -102,7 +102,7 @@ void start_Game(cell **field)
 			}
 		}
 		update_field(field);
-		sleep(1);
+		usleep(5000);
 	}
 	
 }
