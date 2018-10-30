@@ -54,6 +54,8 @@ int main()
 		
 	n_choices = ARRAY_SIZE(choices);
 	configurations_choice = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
+	if (configurations_choice == NULL)
+		{return -1 ;}
 
 	for(i = 0; i < n_choices; ++i)
 		configurations_choice[i] = new_item(choices[i], choices[i]);

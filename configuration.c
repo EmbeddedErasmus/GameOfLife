@@ -1,5 +1,4 @@
 #include <curses.h>
-
 #include "cell.h"
 #include "menu_display.h"
 

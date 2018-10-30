@@ -16,14 +16,17 @@ int main()
 	char namesMessage[]="By Bernardo Amaral, José Conceição, Marceau Fillon, Aleksander Poverud Tokle";
 
 	int i=0; // Number of choices for configuration and counter for for loop
-	int fsize = 20;
+	int final_x = LINES-1;
+	int final_y = COLS-1;
 
 	cell **field;
 	initscr();
 
-	field = calloc(LINES, sizeof(cell *));
-	for(i = 0;i < LINES; i++)
-		field[i] = calloc(COLS, sizeof(cell));
+	field = calloc(final_x, sizeof(cell *));
+	if (field == NULL )
+		{return -1 ; }
+	for(i = 0;i < final_x; i++)
+		field[i] = calloc(final_y, sizeof(cell));
 
 	//*******************************************
 	//Welcome window
@@ -39,8 +42,11 @@ int main()
 	//*******************************************************************
 	display_menu(field);
 
-	for (i = 0; i < fsize; ++i)
-		free(field[i]); //  free each array of cells d
+	for (i = 0; i < LINES; ++i)
+	{
+		free(field[i]); //  free each array of cells 
+	}
+
 	free(field); // free the array of pointers field
 
 	endwin();

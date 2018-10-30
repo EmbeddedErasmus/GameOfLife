@@ -35,11 +35,18 @@ void display_menu(cell **field)
 		
 	configurations_choice = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
 
+	if (configurations_choice == NULL)
+	{
+		return; 
+	}
+
 	for(i = 0; i < n_choices; ++i)
 		configurations_choice[i] = new_item(configuration_choices[i], configuration_choices[i]);
+
 	configurations_choice[n_choices] = (ITEM *)NULL;
 
 	configuration_menu = new_menu((ITEM **)configurations_choice);
+
 	mvprintw(LINES - 2, 0, "F4 to Exit"); //Print at the bottom how to quit the window to go back to the terminal
 	post_menu(configuration_menu); //Display the menu
 	refresh();
@@ -69,10 +76,11 @@ void display_menu(cell **field)
 		display_configuration(index_menu_item, field); //Getting the index of the current item in the menu	
 	}
 
-	for(i=0;i<n_choices;i++)
+	for(i=0;i<=n_choices ;i++)
 	{
 		free_item(configurations_choice[i]);
 	}
+	free(configurations_choice);
 
 	free_menu(configuration_menu);
 }
