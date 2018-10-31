@@ -2,15 +2,44 @@
 #include "cell.h"
 #include "menu_display.h"
 
+/*
+ * Function:  display
+ * --------------------
+ * Arguments:- WINDOW *win (Window to show the game)
+ *			 - cell **area (2D array of cell with all the information of the field)
+ *			 - startx (first x coordinate of the window)
+ *			 - starty (first y coordinate of the window)
+ *			 - endx (last x coordinate of the window)
+ *			 - endy (last y coordinate of the window)
+ *
+ * This function is responsible for printing the current state of each cell in the window. 
+ * If the cell is alive it will print an #, if not it will leave it empty.
+ *
+ */
+
+
 void display(WINDOW *win, cell **area, int startx, int starty, int endx, int endy)
 {	int i, j;
-	wclear(win);
+	wclear(win); // clear the window
 	for(i = startx; i <= endx; ++i)
 		for(j = starty;j <= endy; ++j)
 			if(area[i][j].current_state == TRUE)
-				mvwaddch(win, i, j, '#');
-	wrefresh(win);
+				mvwaddch(win, i, j, '#'); // move the cursor to the (i,j) coordinates and then print
+	wrefresh(win); // show the result in the window
 }
+
+
+/*
+ * Function:  display_configuration
+ * --------------------
+ * Arguments:- configuration (Number of the item that the user selected)
+ *			 - cell **area (2D array of cell with all the information of the field)
+ *
+ * This function is responsible for setting the state of specific cells as alive forming
+ * the initial configuration chosen by the user. After printing this configuration it waits
+ * until the autorithazion of the user to start the game.
+ *
+ */
 
 int display_configuration(int configuration, cell **field)
 {
@@ -55,12 +84,14 @@ int display_configuration(int configuration, cell **field)
 
 	update_field(field);
 	
-	display(stdscr, field, 0,0,LINES-1, COLS-1);
+	display(stdscr, field, 0,0,LINES-1, COLS-1);  // Print the initial configuration in the screen
 
+	// Comands to start or finish the game
 	mvprintw(LINES - 1, 0, "Press F4 to Exit"); 
 	mvprintw(LINES - 2, 0, "Press enter to start");
 	mvprintw(LINES - 3, 0, "Press F2 to return");
 
+	// Waits for the autoritazion of the user to start the game.
 	while(choice_Is_Made!=1 &&((key_played_on_menu = getch()) != KEY_F(4)))
 	{   switch(key_played_on_menu)
 	    {	case KEY_F(2):
@@ -77,10 +108,12 @@ int display_configuration(int configuration, cell **field)
 		}
 	}
 
+	// If the user choose to return, it goes back to the main menu
 	if(choice_Is_Made && back_to_menu)
 	{
 		display_menu(field);
 	}
+	// User autorize the game to start
 	else if(choice_Is_Made && start_Simulation)
 	{
 		start_Game(field);

@@ -3,6 +3,15 @@
 #include <unistd.h>
 #include "configuration.h"
 
+/*
+ * Function:  clear_field
+ * --------------------
+ * Arguments:- cell **field (2D array of cell with all the information of the field)
+ *
+ * This function is responsible for setting the state of all cells as dead to clean the field.
+ *
+ */
+
 void clear_field(cell **field)
 {
 	int x=0, y=0;
@@ -16,6 +25,16 @@ void clear_field(cell **field)
 	}
 }
 
+/*
+ * Function:  update_field
+ * --------------------
+ * Arguments:- cell **area (2D array of cell with all the information of the field)
+ *			 
+ *
+ * This function is responsible for setting the current state of each cell equals to the next state
+ * in order to be possivle to print the new configuration of the all the cells in the next iteration.
+ *
+ */
 
 void update_field(cell **field)
 {
@@ -28,6 +47,18 @@ void update_field(cell **field)
 		}
 	}
 }
+
+/*
+ * Function:  check_neighboors
+ * --------------------
+ * Arguments:- cell **field (2D array of cell with all the information of the field)
+ *			 - i (x coordinate of selected cell), 
+ *			 - j (y coordinate of selected cell)
+ *
+ * This function is responsible for checking all the rules of the Conway's Game of life 
+ * and set the next state of each cell according to that.
+ *
+ */
 
 void check_neighboors(cell **field, int i, int j)
 {
@@ -86,6 +117,18 @@ void check_neighboors(cell **field, int i, int j)
 	}
 }
 
+/*
+ * Function:  start_Game
+ * --------------------
+ * Arguments:- cell **field (2D array of cell with all the information of the field)
+ *
+ *
+ * This function is responsible for rolling the game. It runs the window and check 
+ * for each cell the game rules. The game continues untilt the user press a key to 
+ * stop.
+ *
+ */
+
 void start_Game(cell **field)
 {
 	int key_played=0;
@@ -98,10 +141,10 @@ void start_Game(cell **field)
 		{
 			for(y=0;y<COLS-1;y++)
 			{
-				check_neighboors(field, x,y);
+				check_neighboors(field, x,y); // check the game rules
 			}
 		}
-		update_field(field);
+		update_field(field); // update the state off all the cells and then print it in the window
 	}
 	
 }
